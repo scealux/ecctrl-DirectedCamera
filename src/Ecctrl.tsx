@@ -59,8 +59,8 @@ const Ecctrl: ForwardRefRenderFunction<RapierRigidBody, EcctrlProps> = ({
   disableFollowCamPos = null,
   disableFollowCamTarget = null,
   // Follow camera setups
-  camInitDis = -5,
-  camMaxDis = -7,
+  camInitDis = -10,
+  camMaxDis = -10,
   camMinDis = -0.7,
   camUpLimit = 1.5, // in rad
   camLowLimit = -1.3, // in rad

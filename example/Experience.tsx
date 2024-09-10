@@ -14,6 +14,7 @@ import ShotCube from "./ShotCube";
 import { useControls } from "leva";
 import CharacterModel from "./CharacterModel";
 import React, { useEffect, useState } from "react";
+import Courtyard from "./Courtyard";
 
 export default function Experience() {
   /**
@@ -57,13 +58,13 @@ export default function Experience() {
     <>
       <Perf position="top-left" minimal />
 
-      <Grid
+      {/* <Grid
         args={[300, 300]}
         sectionColor={"lightgray"}
         cellColor={"gray"}
         position={[0, -0.99, 0]}
         userData={{ camExcludeCollision: true }} // this won't be collide by camera ray
-      />
+      /> */}
 
       <Lights />
 
@@ -83,35 +84,40 @@ export default function Experience() {
             autoBalanceDampingOnY={0.05}
             disableControl={disableControl}
             disableFollowCam={disableFollowCam}
+            mode="FixedCamera"
           >
             {/* Replace your model here */}
             <CharacterModel />
           </Ecctrl>
         </KeyboardControls>
 
-        {/* Rough plan */}
+        {/* Rough plan
         <RoughPlane />
-
-        {/* Slopes and stairs */}
+        */}
+        {/* Slopes and stairs
         <Slopes />
-
-        {/* Small steps */}
+        */}
+        {/* Small steps
         <Steps />
-
-        {/* Rigid body objects */}
+        */}
+        {/* Rigid body objects
         <RigidObjects />
-
-        {/* Floating platform */}
+        */}
+        {/* Floating platform 
         <FloatingPlatform />
-
-        {/* Dynamic platforms */}
+        */}
+        {/* Dynamic platforms 
         <DynamicPlatforms />
-
-        {/* Floor */}
+        */}
+        {/* Floor
         <Floor />
+         */}
+        <Courtyard/>
 
-        {/* Shoting cubes */}
+        {/* Shoting cubes
         <ShotCube />
+        */}
+        
       </Physics >
     </>
   );

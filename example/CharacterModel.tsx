@@ -58,7 +58,7 @@ export default function CharacterModel(props: CharacterModelProps) {
   const { mainColor, outlineColor, trailColor } = useControls(
     "Character Model",
     {
-      mainColor: "mediumslateblue",
+      mainColor: "white",
       outlineColor: "black",
       trailColor: "violet",
     }
@@ -262,9 +262,9 @@ export default function CharacterModel(props: CharacterModelProps) {
               castShadow
             />
             <Trail
-              width={1.5}
+              width={0.1}
               color={trailColor}
-              length={1.5}
+              length={0.1}
               attenuation={(width) => width}
             >
               <primitive object={nodes.Body} />
