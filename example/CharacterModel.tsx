@@ -133,8 +133,8 @@ export default function CharacterModel(props: CharacterModelProps) {
     if (curAnimation === animationSet.action4) {
       if (rightHand) {
         rightHand.getWorldPosition(rightHandPos);
-        group.current.getWorldPosition(bodyPos);
-        group.current.getWorldQuaternion(bodyRot);
+        group.current?.getWorldPosition(bodyPos);
+        group.current?.getWorldQuaternion(bodyRot);
       }
 
       // Apply hands position to hand colliders

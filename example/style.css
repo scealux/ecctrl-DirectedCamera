@@ -1,6 +1,7 @@
 html,
 body,
 #root {
+  font-family: sans-serif;
   position: fixed;
   top: 0;
   left: 0;
@@ -18,10 +19,12 @@ body,
   -webkit-user-select: none;
   -ms-user-select: none;
   touch-action: none;
+  margin: 0px;
 }
 
 .controlKeys {
   position: absolute;
+  z-index: 1;
   width: 20rem;
   left: 50%;
   margin-left: -10rem;
@@ -33,7 +36,23 @@ body,
   -ms-user-select: none;
 }
 
+#popup {
+  position: absolute;
+  width: 100rem;
+  height: 100rem;
+  left: 0%;
+  top: 0%;
+  backdrop-filter: blur(10px);
+  background: rgba(100,100,100,0.5);
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 .title {
+  z-index: 1;
   font-size: 0.8rem;
   color: darkgray;
   position: absolute;

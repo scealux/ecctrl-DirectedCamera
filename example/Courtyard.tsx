@@ -1,6 +1,7 @@
 import { RigidBody } from "@react-three/rapier";
 import { useGLTF, Text } from "@react-three/drei";
 import { useEffect } from "react";
+import React from "react";
 import * as THREE from "three";
 
 export default function Courtyard() {
