@@ -22,7 +22,7 @@ export default function Courtyard() {
   }, []);
 
   return (
-    <group position={[-10, -1, 10]}>
+    <group position={[-1, -1, 10]}>
       <RigidBody type="fixed" colliders="trimesh" rotation={[0, Math.PI, 0]}>
         <primitive object={courtyard.scene} />
       </RigidBody>

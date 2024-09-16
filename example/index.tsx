@@ -6,7 +6,9 @@ import { Leva } from "leva";
 import { EcctrlJoystick } from "../src/EcctrlJoystick";
 import { Suspense, useEffect, useState } from "react";
 import React from "react";
-import Popup from "/Popup.tsx";
+import Popup from "./Popup.tsx";
+import HUD from "./HeadsUpDisplay.tsx"
+import { PlayerProvider } from "./PlayerContext.tsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -30,6 +32,7 @@ const EcctrlJoystickControls = () => {
 
 root.render(
   <>
+    <PlayerProvider>
     <Leva collapsed />
     <EcctrlJoystickControls />
     <Canvas
@@ -39,16 +42,22 @@ root.render(
         near: 0.1,
         far: 1000,
       }}
-      onPointerDown={(e) => {
-        if (e.pointerType === 'mouse') {
-          (e.target as HTMLCanvasElement).requestPointerLock()
-        }
+      // onPointerDown={(e) => {
+      //   if (e.pointerType === 'mouse') {
+      //     (e.target as HTMLCanvasElement).requestPointerLock()
+      //   }
+      // }}
+      onMouseMove={(e) => {
+        //console.log("Moving")
+        //Need to check raycast 
       }}
     >
       <Suspense fallback={null}>
         <Experience />
       </Suspense>
     </Canvas>
-    <Popup/>
+      <HUD/>
+      <Popup/>
+    </PlayerProvider>
   </>
 );

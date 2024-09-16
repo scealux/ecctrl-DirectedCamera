@@ -1,5 +1,5 @@
 import { useHelper } from "@react-three/drei";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 
 export default function Lights() {

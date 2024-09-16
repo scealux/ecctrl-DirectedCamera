@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { useRef, useMemo, useState, useEffect } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 
 export default function ShotCube() {
   const { camera } = useThree();

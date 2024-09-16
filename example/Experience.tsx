@@ -1,4 +1,4 @@
-import { Grid, KeyboardControls } from "@react-three/drei";
+import { Grid, KeyboardControls, OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics } from "@react-three/rapier";
 import Ecctrl from "../src/Ecctrl";
@@ -15,11 +15,12 @@ import { useControls } from "leva";
 import CharacterModel from "./CharacterModel";
 import React, { useEffect, useState } from "react";
 import Courtyard from "./Courtyard";
+import TeleportTarget from "./TeleportTarget";
+import { PlayerProvider, usePlayer } from './PlayerContext';
+import MouseControls from "./MouseControls";
 
-export default function Experience() {
-  /**
-   * Delay physics activate
-   */
+function ExperienceContent() {
+  // Delay physics activate
   const [pausedPhysics, setPausedPhysics] = useState(true);
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -29,18 +30,14 @@ export default function Experience() {
     return () => clearTimeout(timeout);
   }, []);
 
-  /**
-   * Debug settings
-   */
+  // Debug settings
   const { physics, disableControl, disableFollowCam } = useControls("World Settings", {
     physics: false,
     disableControl: false,
     disableFollowCam: false,
   });
 
-  /**
-   * Keyboard control preset
-   */
+  // Keyboard control preset
   const keyboardMap = [
     { name: "forward", keys: ["ArrowUp", "KeyW"] },
     { name: "backward", keys: ["ArrowDown", "KeyS"] },
@@ -54,71 +51,52 @@ export default function Experience() {
     { name: "action4", keys: ["KeyF"] },
   ];
 
+  const { controlScheme } = usePlayer();
+
   return (
     <>
       <Perf position="top-left" minimal />
-
-      {/* <Grid
-        args={[300, 300]}
-        sectionColor={"lightgray"}
-        cellColor={"gray"}
-        position={[0, -0.99, 0]}
-        userData={{ camExcludeCollision: true }} // this won't be collide by camera ray
-      /> */}
-
       <Lights />
+        <Physics debug={physics} timeStep="vary" paused={pausedPhysics}>
+        {/* Conditionally render based on control scheme */}
+        {controlScheme === 'keyboard' ? (
+            <KeyboardControls map={keyboardMap}>
+              <Ecctrl
+                debug
+                animated
+                followLight
+                springK={2}
+                dampingC={0.2}
+                autoBalanceSpringK={1.2}
+                autoBalanceDampingC={0.04}
+                autoBalanceSpringOnY={0.7}
+                autoBalanceDampingOnY={0.05}
+                disableControl={disableControl}
+                disableFollowCam={disableFollowCam}
+                mode="FixedCamera"
+              >
+                <CharacterModel />
+              </Ecctrl>
+            </KeyboardControls>
+          ) : (
+            <>
+              <MouseControls />
 
-      <Physics debug={physics} timeStep="vary" paused={pausedPhysics}>
-        {/* Keyboard preset */}
-        <KeyboardControls map={keyboardMap}>
-          {/* Character Control */}
-          <Ecctrl
-            debug
-            animated
-            followLight
-            springK={2}
-            dampingC={0.2}
-            autoBalanceSpringK={1.2}
-            autoBalanceDampingC={0.04}
-            autoBalanceSpringOnY={0.7}
-            autoBalanceDampingOnY={0.05}
-            disableControl={disableControl}
-            disableFollowCam={disableFollowCam}
-            mode="FixedCamera"
-          >
-            {/* Replace your model here */}
-            <CharacterModel />
-          </Ecctrl>
-        </KeyboardControls>
-
-        {/* Rough plan
-        <RoughPlane />
-        */}
-        {/* Slopes and stairs
-        <Slopes />
-        */}
-        {/* Small steps
-        <Steps />
-        */}
-        {/* Rigid body objects
-        <RigidObjects />
-        */}
-        {/* Floating platform 
-        <FloatingPlatform />
-        */}
-        {/* Dynamic platforms 
-        <DynamicPlatforms />
-        */}
-        {/* Floor
-        <Floor />
-         */}
-        <Courtyard/>
-
-        {/* Shoting cubes
-        <ShotCube />
-        */}
-        
-      </Physics >
+              {/*Teleport Targets*/}
+              <TeleportTarget position={[0,0,30]} name="Lobby"/>
+              <TeleportTarget position={[20,0,30]} name="Room 1"/>
+              <TeleportTarget name="Courtyard"/>
+            </>
+          )}
+          <Courtyard/>
+         
+        </Physics >
     </>
+  );
+}
+
+export default function Experience() {
+  return (
+      <ExperienceContent />
   );
 }

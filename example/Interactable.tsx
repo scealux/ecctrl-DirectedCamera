@@ -8,6 +8,7 @@ export default function Interactable() {
     <group position={[-10, -1, 10]}>
       <RigidBody type="fixed" colliders="trimesh" rotation={[0, Math.PI, 0]}>
         <meshBasicMaterial color="limegreen"/>
+        <boxGeometry/>
       </RigidBody>
       <Text
         rotation={[0, Math.PI, 0]}
