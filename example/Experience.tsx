@@ -17,6 +17,7 @@ import React, { useEffect, useState } from "react";
 import Courtyard from "./Courtyard";
 import TeleportTarget from "./TeleportTarget";
 import { PlayerProvider, usePlayer } from './PlayerContext';
+import LocationCollider from "./LocationColliders";
 import MouseControls from "./MouseControls";
 
 function ExperienceContent() {
@@ -77,6 +78,9 @@ function ExperienceContent() {
               >
                 <CharacterModel />
               </Ecctrl>
+              {/* <LocationCollider name="Courtyard" position={[0,1,-5]} scale={[45,4,45]}/>
+              <LocationCollider name="Entrance" position={[0,1,23.5]} scale={[16.5,4,8]}/> */}
+            
             </KeyboardControls>
           ) : (
             <>

@@ -15,8 +15,8 @@ type PlayerContextType = {
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
-export const PlayerProvider: React.FC = ({ children }) => {
-  const [position, setPosition] = useState(new THREE.Vector3(0, 0, 0))
+export const PlayerProvider = ({children}) => {
+  const [position, setPosition] = useState(new THREE.Vector3(0, 1, 0))
   const [controlScheme, setControlScheme] = useState<ControlScheme>('mouse')
   const [locationName, setLocationName] = useState("Courtyard")
 

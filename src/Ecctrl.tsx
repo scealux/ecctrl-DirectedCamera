@@ -21,6 +21,7 @@ import type {
   Vector,
 } from "@dimforge/rapier3d-compat";
 import React from "react";
+import { usePlayer } from '../example/PlayerContext';
 
 export { EcctrlAnimation } from "./EcctrlAnimation";
 export { useFollowCam } from "./hooks/useFollowCam";
@@ -144,9 +145,10 @@ const Ecctrl: ForwardRefRenderFunction<RapierRigidBody, EcctrlProps> = ({
     if (findMode("CameraBasedMovement", mode)) isModeCameraBased = true
   }
 
-  /** 
-   * Body collider setup
-   */
+  // PlayerContext setup
+  const { position, setPosition } = usePlayer();
+
+  // Body collider setup
   const modelFacingVec: THREE.Vector3 = useMemo(() => new THREE.Vector3(), []);
   const bodyFacingVec: THREE.Vector3 = useMemo(() => new THREE.Vector3(), []);
   const bodyBalanceVec: THREE.Vector3 = useMemo(() => new THREE.Vector3(), []);
@@ -1455,7 +1457,7 @@ const Ecctrl: ForwardRefRenderFunction<RapierRigidBody, EcctrlProps> = ({
     <RigidBody
       colliders={false}
       ref={characterRef}
-      position={props.position || [0, 5, 0]}
+      position={props.position || [position.x, position.y, position.z]}
       friction={props.friction || -0.5}
       onContactForce={(e) => bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)}
       onCollisionExit={() => bodyContactForce.set(0, 0, 0)}

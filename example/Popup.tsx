@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { usePlayer } from './PlayerContext';
 import styled from "styled-components";
 
 function Popup() {
   const [isVisible, setIsVisible] = useState(true);
+  const { setControlScheme } = usePlayer();
 
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsVisible(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleControlSchemeChange = (scheme) => {
+    setControlScheme(scheme);
+    setIsVisible(false);
   };
 
   return (
     <>
       {isVisible && (
         <BlurryBackground>
-          <ControlsScreen onClose={toggleVisibility} />
+          <ControlsScreen 
+            setIsVisible={setIsVisible} 
+            onControlSchemeChange={handleControlSchemeChange} 
+          />
         </BlurryBackground>
       )}
     </>
@@ -38,19 +55,19 @@ const BlurryBackground = styled.div`
   z-index: 1000000;
 `;
 
-function ControlsScreen({ onClose }) {
+function ControlsScreen({ setIsVisible, onControlSchemeChange }) {
   return (
     <ControlsSelector>
       <h1>Choose your control method</h1>
-      <CloseButton onClick={onClose} />
+      <CloseButton setIsVisible={setIsVisible} />
       <div className="options">
-        <ControlsOption onClick={() => console.log("SWITCH TO KEYBOARD CONTROLS")}>
+        <ControlsOption onClick={() => onControlSchemeChange('keyboard')}>
           <h2>Keyboard Controls</h2>
           <p>Move with the "WASD" or arrow keys, camera follows your movement.</p>
           <img src="./keyControls.png" alt="control keys" width="30%" />
         </ControlsOption>
         <p>or</p>
-        <ControlsOption onClick={() => console.log("SWITCH TO MOUSE CONTROLS")}>
+        <ControlsOption onClick={() => onControlSchemeChange('mouse')}>
           <h2>Click and Drag Controls</h2>
           <p>Click and drag to rotate the view, click highlighted zones to teleport.</p>
         </ControlsOption>
@@ -99,6 +116,9 @@ const ControlsOption = styled.div`
     background: rgba(255,255,255, 1);
     scale: 1.01;
     cursor: pointer;
+  }
+  &:active {
+    border: 3px solid red;
   }
 `;
 
